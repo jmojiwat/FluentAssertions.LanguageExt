@@ -53,3 +53,7 @@ using FluentAssertions.LanguageExt;
 var option = Prelude.Some(123);
 option.Should().BeSome();
 ```
+
+### nuget
+
+[FluentAssertions.LanguageExt](https://www.nuget.org/packages/FluentAssertions.LanguageExt/)
