@@ -8,12 +8,14 @@
 ### Available extension methods
 
 - `BeSome()`
+- `BeSome(expected)`
 - `BeNone()`
 
 ## Either, EitherAsync and EitherUnsafe
 
 ### Available extension methods
 
+- `Be(expected)`
 - `BeLeft()`
 - `BeRight()`
 - `BeBottom()`
