@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>Jacob Mojiwat</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">Apache-2.0</license>
+    <!-- <icon>icon.png</icon> -->
+    <projectUrl>https://github.com/jmojiwat/FluentAssertions.LanguageExt</projectUrl>
+    <description>LanguageExt extensions for FluentAssertions</description>
+    <releaseNotes>Initial release.</releaseNotes>
+    <copyright>$copyright$</copyright>
+    <tags>FluentAssertions LanguageExt</tags>
+  </metadata>
+</package>
