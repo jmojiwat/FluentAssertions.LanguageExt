@@ -16,9 +16,10 @@ public class LanguageExtEitherAssertions<TL, TR> : ReferenceTypeAssertions<Eithe
     {
         Execute.Assertion
             .BecauseOf(because, becauseArgs)
+            .WithExpectation("Expected {context:either} to be Left{reason}, ")
             .Given(() => Subject)
             .ForCondition(subject => subject.IsLeft)
-            .FailWith("Expected {context:either} to be Left.");
+            .FailWith("but found to be Right.");
 
         return new AndConstraint<LanguageExtEitherAssertions<TL, TR>>(this);
     }
@@ -27,9 +28,10 @@ public class LanguageExtEitherAssertions<TL, TR> : ReferenceTypeAssertions<Eithe
     {
         Execute.Assertion
             .BecauseOf(because, becauseArgs)
+            .WithExpectation("Expected {context:either} to be Right{reason}, ")
             .Given(() => Subject)
             .ForCondition(subject => subject.IsRight)
-            .FailWith("Expected {context:either} to be Right.");
+            .FailWith("but found to be Left.");
 
         return new AndConstraint<LanguageExtEitherAssertions<TL, TR>>(this);
     }
@@ -38,9 +40,40 @@ public class LanguageExtEitherAssertions<TL, TR> : ReferenceTypeAssertions<Eithe
     {
         Execute.Assertion
             .BecauseOf(because, becauseArgs)
+            .WithExpectation("Expected {context:either} to be Bottom{reason}, ")
             .Given(() => Subject)
             .ForCondition(subject => subject.IsBottom)
-            .FailWith("Expected {context:either} to be Bottom.");
+            .FailWith("but found to be either Left or Right.");
+
+        return new AndConstraint<LanguageExtEitherAssertions<TL, TR>>(this);
+    }
+
+    public AndConstraint<LanguageExtEitherAssertions<TL, TR>> Be(TL expected, string because = "", params object[] becauseArgs)
+    {
+        Execute.Assertion
+            .BecauseOf(because, becauseArgs)
+            .WithExpectation("Expected {context:either} to be Left {0}{reason}, ", expected)
+            .Given(() => Subject)
+            .ForCondition(subject => subject.IsLeft)
+            .FailWith("but found to be Right")
+            .Then
+            .ForCondition(subject => subject == expected)
+            .FailWith("but found to be Left {0}", Subject);
+
+        return new AndConstraint<LanguageExtEitherAssertions<TL, TR>>(this);
+    }
+
+    public AndConstraint<LanguageExtEitherAssertions<TL, TR>> Be(TR expected, string because = "", params object[] becauseArgs)
+    {
+        Execute.Assertion
+            .BecauseOf(because, becauseArgs)
+            .WithExpectation("Expected {context:either} to be Right {0}{reason}, ", expected)
+            .Given(() => Subject)
+            .ForCondition(subject => subject.IsRight)
+            .FailWith("but found to be Left")
+            .Then
+            .ForCondition(subject => subject == expected)
+            .FailWith("but found to be Right {0}", Subject);
 
         return new AndConstraint<LanguageExtEitherAssertions<TL, TR>>(this);
     }

@@ -1,6 +1,7 @@
 ﻿using FluentAssertions.Execution;
 using FluentAssertions.Primitives;
 using LanguageExt;
+using static Nito.AsyncEx.AsyncContext;
 
 namespace FluentAssertions.LanguageExt;
 
@@ -18,8 +19,8 @@ public class LanguageExtTryOptionAsyncAssertions<T> : ReferenceTypeAssertions<Tr
             .BecauseOf(because, becauseArgs)
             .WithExpectation("Expected {context:tryoptionasync} to be Fail{reason}, ")
             .Given(() => Subject)
-            .ForCondition(subject => subject.IsFail().Result)
-            .FailWith("but found to be Fail.");
+            .ForCondition(subject => Run(subject.IsFail))
+            .FailWith("but found to be {0}.", Subject);
 
         return new AndConstraint<LanguageExtTryOptionAsyncAssertions<T>>(this);
     }
@@ -28,9 +29,10 @@ public class LanguageExtTryOptionAsyncAssertions<T> : ReferenceTypeAssertions<Tr
     {
         Execute.Assertion
             .BecauseOf(because, becauseArgs)
+            .WithExpectation("Expected {context:tryoptionasync} to be Some{reason}, ")
             .Given(() => Subject)
-            .ForCondition(subject => subject.IsSome().Result)
-            .FailWith("Expected {context:tryoptionasync} to be Some.");
+            .ForCondition(subject => Run(subject.IsSome))
+            .FailWith("but found to be {0}.", Subject);
 
         return new AndConstraint<LanguageExtTryOptionAsyncAssertions<T>>(this);
     }
@@ -39,9 +41,10 @@ public class LanguageExtTryOptionAsyncAssertions<T> : ReferenceTypeAssertions<Tr
     {
         Execute.Assertion
             .BecauseOf(because, becauseArgs)
+            .WithExpectation("Expected {context:tryoptionasync} to be None{reason}, ")
             .Given(() => Subject)
-            .ForCondition(subject => subject.IsNone().Result)
-            .FailWith("Expected {context:tryoptionasync} to be None.");
+            .ForCondition(subject => Run(subject.IsNone))
+            .FailWith("but found to be {0}.", Subject);
 
         return new AndConstraint<LanguageExtTryOptionAsyncAssertions<T>>(this);
     }
@@ -50,9 +53,10 @@ public class LanguageExtTryOptionAsyncAssertions<T> : ReferenceTypeAssertions<Tr
     {
         Execute.Assertion
             .BecauseOf(because, becauseArgs)
+            .WithExpectation("Expected {context:tryoptionasync} to be Some or Fail{reason}, ")
             .Given(() => Subject)
-            .ForCondition(subject => subject.IsNoneOrFail().Result)
-            .FailWith("Expected {context:tryoptionasync} to be None or Fail.");
+            .ForCondition(subject => Run(subject.IsNoneOrFail))
+            .FailWith("but found to be {0}.", Subject);
 
         return new AndConstraint<LanguageExtTryOptionAsyncAssertions<T>>(this);
     }

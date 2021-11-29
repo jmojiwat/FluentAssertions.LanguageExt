@@ -9,14 +9,20 @@ public static class LanguageExtAssertionsExtensions
 
     public static LanguageExtEitherAssertions<TL, TR> Should<TL, TR>(this Either<TL, TR> instance) => new(instance);
 
-    public static LanguageExtEitherAsyncAssertions<TL, TR> Should<TL, TR>(this EitherAsync<TL, TR> instance) => new(instance);
+    public static LanguageExtEitherAsyncAssertions<TL, TR> Should<TL, TR>(this EitherAsync<TL, TR> instance) =>
+        new(instance);
 
-    public static LanguageExtEitherUnsafeAssertions<TL, TR> Should<TL, TR>(this EitherUnsafe<TL, TR> instance) => new(instance);
+    public static LanguageExtEitherUnsafeAssertions<TL, TR> Should<TL, TR>(this EitherUnsafe<TL, TR> instance) =>
+        new(instance);
 
     public static LanguageExtMonoidValidationAssertions<TMonoidalFail, TFail, TSuccess>
         Should<TMonoidalFail, TFail, TSuccess>(this Validation<TMonoidalFail, TFail, TSuccess> instance)
         where TMonoidalFail : struct, Monoid<TFail>, Eq<TFail> =>
         new(instance);
+
+    public static LanguageExtOptionBoolAssertions Should(this Option<bool> instance) => new(instance);
+
+    public static LanguageExtOptionAsyncBoolAssertions Should(this OptionAsync<bool> instance) => new(instance);
 
     public static LanguageExtOptionAssertions<T> Should<T>(this Option<T> instance) => new(instance);
 

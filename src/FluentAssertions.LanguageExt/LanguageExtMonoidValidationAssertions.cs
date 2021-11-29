@@ -17,9 +17,10 @@ public class LanguageExtMonoidValidationAssertions<TMonoidFail, TFail, TSuccess>
     {
         Execute.Assertion
             .BecauseOf(because, becauseArgs)
+            .WithExpectation("Expected {context:monoidalvalidation} to be Fail{reason}, ")
             .Given(() => Subject)
             .ForCondition(subject => subject.IsFail)
-            .FailWith("Expected {context:monoidalvalidation} to be Fail.");
+            .FailWith("but found to be {0}.", Subject);
 
         return new AndConstraint<LanguageExtMonoidValidationAssertions<TMonoidFail, TFail, TSuccess>>(this);
     }
@@ -28,9 +29,10 @@ public class LanguageExtMonoidValidationAssertions<TMonoidFail, TFail, TSuccess>
     {
         Execute.Assertion
             .BecauseOf(because, becauseArgs)
+            .WithExpectation("Expected {context:monoidalvalidation} to be Fail{reason}, ")
             .Given(() => Subject)
             .ForCondition(subject => subject.IsSuccess)
-            .FailWith("Expected {context:monoidalvalidation} to be Success.");
+            .FailWith("but found to be {0}.", Subject);
 
         return new AndConstraint<LanguageExtMonoidValidationAssertions<TMonoidFail, TFail, TSuccess>>(this);
     }

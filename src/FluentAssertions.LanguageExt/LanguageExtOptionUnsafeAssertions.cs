@@ -28,10 +28,25 @@ public class LanguageExtOptionUnsafeAssertions<T> : ReferenceTypeAssertions<Opti
     {
         Execute.Assertion
             .BecauseOf(because, becauseArgs)
-            .WithExpectation("Expected {context:option} to be Some{reason}, ")
+            .WithExpectation("Expected {context:optionunsafe} to be Some{reason}, ")
             .Given(() => Subject)
             .ForCondition(subject => subject.IsSome)
             .FailWith("but found to be None.");
+
+        return new AndConstraint<LanguageExtOptionUnsafeAssertions<T>>(this);
+    }
+
+    public AndConstraint<LanguageExtOptionUnsafeAssertions<T>> BeSome(T expected, string because = "", params object[] becauseArgs)
+    {
+        Execute.Assertion
+            .BecauseOf(because, becauseArgs)
+            .WithExpectation("Expected {context:optionunsafe} to be Some {0}{reason}, ", expected)
+            .Given(() => Subject)
+            .ForCondition(subject => subject.IsSome)
+            .FailWith("but found to be None.")
+            .Then
+            .ForCondition(subject => subject == expected)
+            .FailWith("but found Some {0}.", Subject);
 
         return new AndConstraint<LanguageExtOptionUnsafeAssertions<T>>(this);
     }

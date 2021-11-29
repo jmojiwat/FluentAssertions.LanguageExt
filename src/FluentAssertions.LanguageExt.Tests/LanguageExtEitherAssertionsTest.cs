@@ -40,4 +40,36 @@ public class LanguageExtEitherAssertionsTest
 
         action.Should().NotThrow();
     }
+
+    [Fact]
+    public void ShouldContain_with_expected_Left_returns_expected_result()
+    {
+        var action = () => LeftResult().Should().Be(123);
+
+        action.Should().NotThrow();
+    }
+
+    [Fact]
+    public void ShouldContain_with_expected_Right_returns_expected_result()
+    {
+        var action = () => RightResult().Should().Be("abc");
+
+        action.Should().NotThrow();
+    }
+
+    [Fact]
+    public void ShouldContain_with_unexpected_Left_returns_expected_result()
+    {
+        var action = () => LeftResult().Should().Be(456);
+
+        action.Should().Throw<XunitException>();
+    }
+
+    [Fact]
+    public void ShouldContain_with_unexpected_Right_returns_expected_result()
+    {
+        var action = () => RightResult().Should().Be("def");
+
+        action.Should().Throw<XunitException>();
+    }
 }
