@@ -25,7 +25,7 @@ public static class LanguageExtAssertionsExtensions
     public static LanguageExtOptionAsyncBoolAssertions Should(this OptionAsync<bool> instance) => new(instance);
 
     public static LanguageExtOptionAssertions<T> Should<T>(this Option<T> instance) => new(instance);
-
+    
     public static LanguageExtOptionUnsafeAssertions<T> Should<T>(this OptionUnsafe<T> instance) => new(instance);
 
     public static LanguageExtValidationAssertions<TFail, TSuccess> Should<TFail, TSuccess>(

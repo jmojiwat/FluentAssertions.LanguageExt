@@ -22,31 +22,44 @@ public class LanguageExtOptionBoolAssertions : ReferenceTypeAssertions<Option<bo
         return new AndConstraint<LanguageExtOptionBoolAssertions>(this);
     }
 
-
-    public AndConstraint<LanguageExtOptionBoolAssertions> BeSomeTrue(string because = "", params object[] becauseArgs)
+    public AndConstraint<LanguageExtOptionBoolAssertions> BeSome(string because = "", params object[] becauseArgs)
     {
         Execute.Assertion
             .BecauseOf(because, becauseArgs)
+            .WithExpectation("Expected {context:optionbool} to be Some{reason}, ")
             .Given(() => Subject)
             .ForCondition(subject => subject.IsSome)
-            .ForCondition(subject => subject.Match(
-                    b => b,
-                    () => false))
-            .FailWith("Expected {context:optionbool} to be Some true.");
+            .FailWith("but found to be None.");
 
         return new AndConstraint<LanguageExtOptionBoolAssertions>(this);
     }
 
-    public AndConstraint<LanguageExtOptionBoolAssertions> BeSomeFalse(string because = "", params object[] becauseArgs)
+    public AndConstraint<LanguageExtOptionBoolAssertions> BeTrue(string because = "", params object[] becauseArgs)
     {
         Execute.Assertion
             .BecauseOf(because, becauseArgs)
+            .WithExpectation("Expected {context:optionbool} to be Some true{reason}, ")
             .Given(() => Subject)
             .ForCondition(subject => subject.IsSome)
-            .ForCondition(subject => subject.Match(
-                    b => b == false,
-                    () => false))
-            .FailWith("Expected {context:optionbool} to be Some false.");
+            .FailWith("but found to be None.")
+            .Then
+            .ForCondition(subject => subject == true)
+            .FailWith("but found to be Some false.");
+
+        return new AndConstraint<LanguageExtOptionBoolAssertions>(this);
+    }
+
+    public AndConstraint<LanguageExtOptionBoolAssertions> BeFalse(string because = "", params object[] becauseArgs)
+    {
+        Execute.Assertion
+            .BecauseOf(because, becauseArgs)
+            .WithExpectation("Expected {context:optionbool} to be Some false{reason}, ")
+            .Given(() => Subject)
+            .ForCondition(subject => subject.IsSome)
+            .FailWith("but found to be None.")
+            .Then
+            .ForCondition(subject => subject == false)
+            .FailWith("but found to be Some true.");
 
         return new AndConstraint<LanguageExtOptionBoolAssertions>(this);
     }

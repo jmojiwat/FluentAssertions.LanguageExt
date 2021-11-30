@@ -35,4 +35,26 @@ public class LanguageExtValidationAssertions<TFail, TSuccess> : ReferenceTypeAss
 
         return new AndConstraint<LanguageExtValidationAssertions<TFail, TSuccess>>(this);
     }
+
+    public AndConstraint<LanguageExtValidationAssertions<TFail, TSuccess>> BeSuccess(Action<TSuccess> action, string because = "", params object[] becauseArgs)
+    {
+        BeSuccess(because, becauseArgs);
+        Subject.IfSuccess(action);
+
+        return new AndConstraint<LanguageExtValidationAssertions<TFail, TSuccess>>(this);
+    }
+
+    public AndConstraint<LanguageExtValidationAssertions<TFail, TSuccess>> Be(TSuccess expected, string because = "", params object[] becauseArgs)
+    {
+        Execute.Assertion
+            .BecauseOf(because, becauseArgs)
+            .WithExpectation("Expected {context:validation} to be Success {0}{reason}, ", expected)
+            .Given(() => Subject)
+            .ForCondition(subject => subject.IsSuccess)
+            .ForCondition(subject => subject == expected)
+            .FailWith("but found to be {0}", Subject);
+
+        return new AndConstraint<LanguageExtValidationAssertions<TFail, TSuccess>>(this);
+    }
+
 }

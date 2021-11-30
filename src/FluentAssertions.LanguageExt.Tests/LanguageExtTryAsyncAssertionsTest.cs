@@ -1,6 +1,7 @@
 using System;
 using LanguageExt;
 using Xunit;
+using Xunit.Sdk;
 
 namespace FluentAssertions.LanguageExt.Tests;
 
@@ -10,7 +11,7 @@ public class LanguageExtTryAsyncAssertionsTest
     private static TryAsync<string> FailResult() => () => throw new Exception();
 
     [Fact]
-    public void ShouldBeSuccess_with_Success_returns_expected_result()
+    public void BeSuccess_with_Success_returns_expected_result()
     {
         var action = () => SuccessResult().Should().BeSuccess();
 
@@ -18,26 +19,68 @@ public class LanguageExtTryAsyncAssertionsTest
     }
 
     [Fact]
-    public void ShouldBeSuccess_with_Exception_returns_expected_result()
+    public void BeSuccess_with_Exception_returns_expected_result()
     {
         var action = () => FailResult().Should().BeSuccess();
 
-        action.Should().Throw<Exception>();
+        action.Should().Throw<XunitException>();
     }
 
     [Fact]
-    public void ShouldBeFail_with_Success_returns_expected_result()
+    public void BeSuccess_with_expected_Success_returns_expected_result()
+    {
+        var action = () => SuccessResult().Should().BeSuccess(s => s.Should().Be("success"));
+
+        action.Should().NotThrow();
+    }
+
+    [Fact]
+    public void BeSuccess_with_unexpected_Success_returns_expected_result()
+    {
+        var action = () => SuccessResult().Should().BeSuccess(s => s.Should().Be("fail"));
+
+        action.Should().Throw<XunitException>();
+    }
+
+
+    [Fact]
+    public void BeFail_with_Success_returns_expected_result()
     {
         var action = () => SuccessResult().Should().BeFail();
 
-        action.Should().Throw<Exception>();
+        action.Should().Throw<XunitException>();
     }
 
     [Fact]
-    public void ShouldBeFail_with_Exception_returns_expected_result()
+    public void BeFail_with_Exception_returns_expected_result()
     {
         var action = () => FailResult().Should().BeFail();
 
         action.Should().NotThrow();
     }
+
+    [Fact]
+    public void Be_with_expected_Success_returns_expected_result()
+    {
+        var action = () => SuccessResult().Should().Be("success");
+
+        action.Should().NotThrow();
+    }
+
+    [Fact]
+    public void Be_with_unexpected_Success_returns_expected_result()
+    {
+        var action = () => SuccessResult().Should().Be("fail");
+
+        action.Should().Throw<XunitException>();
+    }
+
+    [Fact]
+    public void Be_with_Fail_returns_expected_result()
+    {
+        var action = () => FailResult().Should().Be("fail");
+
+        action.Should().Throw<XunitException>();
+    }
+
 }

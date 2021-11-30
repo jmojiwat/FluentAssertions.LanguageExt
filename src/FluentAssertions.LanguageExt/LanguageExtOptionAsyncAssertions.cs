@@ -29,7 +29,7 @@ public class LanguageExtOptionAsyncAssertions<T> : ReferenceTypeAssertions<Optio
     {
         Execute.Assertion
             .BecauseOf(because, becauseArgs)
-            .WithExpectation("Expected {context:option} to be Some{reason}, ")
+            .WithExpectation("Expected {context:optionasync} to be Some{reason}, ")
             .Given(() => Subject)
             .ForCondition(subject => Run(() => subject.IsSome))
             .FailWith("but found to be None.");
@@ -37,11 +37,19 @@ public class LanguageExtOptionAsyncAssertions<T> : ReferenceTypeAssertions<Optio
         return new AndConstraint<LanguageExtOptionAsyncAssertions<T>>(this);
     }
 
-    public AndConstraint<LanguageExtOptionAsyncAssertions<T>> BeSome(T expected, string because = "", params object[] becauseArgs)
+    public AndConstraint<LanguageExtOptionAsyncAssertions<T>> BeSome(Action<T> action, string because = "", params object[] becauseArgs)
+    {
+        BeSome(because, becauseArgs);
+        Prelude.ignore(Run(async () => await Subject.IfSome(action)));
+
+        return new AndConstraint<LanguageExtOptionAsyncAssertions<T>>(this);
+    }
+
+    public AndConstraint<LanguageExtOptionAsyncAssertions<T>> Be(T expected, string because = "", params object[] becauseArgs)
     {
         Execute.Assertion
             .BecauseOf(because, becauseArgs)
-            .WithExpectation("Expected {context:option} to be Some {0}{reason}, ", expected)
+            .WithExpectation("Expected {context:optionasync} to be Some {0}{reason}, ", expected)
             .Given(() => Subject)
             .ForCondition(subject => Run(() => subject.IsSome))
             .FailWith("but found to be None.")

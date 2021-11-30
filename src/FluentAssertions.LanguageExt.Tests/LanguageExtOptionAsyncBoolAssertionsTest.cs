@@ -11,23 +11,23 @@ public class LanguageExtOptionAsyncBoolAssertionsTest
     private static OptionAsync<bool> NoneResult() => OptionAsync<bool>.None;
 
     [Fact]
-    public void ShouldBeSomeTrue_with_expected_Some_returns_expected_result()
+    public void BeTrue_with_expected_Some_returns_expected_result()
     {
-        var action = () => SomeTrueResult().Should().BeSomeTrue();
+        var action = () => SomeTrueResult().Should().BeTrue();
 
         action.Should().NotThrow();
     }
 
     [Fact]
-    public void ShouldBeSomeTrue_with_unexpected_Some_returns_expected_result()
+    public void BeTrue_with_unexpected_Some_returns_expected_result()
     {
-        var action = () => SomeFalseResult().Should().BeSomeTrue();
+        var action = () => SomeFalseResult().Should().BeTrue();
 
         action.Should().Throw<XunitException>();
     }
 
     [Fact]
-    public void ShouldBeSomeTrue_with_None_returns_expected_result()
+    public void BeTrue_with_None_returns_expected_result()
     {
         var action = () => NoneResult().Should().BeNone();
 
@@ -35,25 +35,25 @@ public class LanguageExtOptionAsyncBoolAssertionsTest
     }
 
     [Fact]
-    public void ShouldBeSomeFalse_with_expected_Some_returns_expected_result()
+    public void BeFalse_with_expected_Some_returns_expected_result()
     {
-        var action = () => SomeFalseResult().Should().BeSomeFalse();
+        var action = () => SomeFalseResult().Should().BeFalse();
 
         action.Should().NotThrow();
     }
 
     [Fact]
-    public void ShouldBeSomeFalse_with_unexpected_Some_returns_expected_result()
+    public void BeFalse_with_unexpected_Some_returns_expected_result()
     {
-        var action = () => SomeTrueResult().Should().BeSomeFalse();
+        var action = () => SomeTrueResult().Should().BeFalse();
 
         action.Should().Throw<XunitException>();
     }
 
     [Fact]
-    public void ShouldBeSomeFalse_with_None_returns_expected_result()
+    public void BeFalse_with_None_returns_expected_result()
     {
-        var action = () => NoneResult().Should().BeSomeFalse();
+        var action = () => NoneResult().Should().BeFalse();
 
         action.Should().Throw<XunitException>();
     }

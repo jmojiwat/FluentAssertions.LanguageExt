@@ -1,6 +1,7 @@
 ﻿using FluentAssertions.Execution;
 using FluentAssertions.Primitives;
 using LanguageExt;
+using static LanguageExt.Prelude;
 
 namespace FluentAssertions.LanguageExt;
 
@@ -36,7 +37,15 @@ public class LanguageExtOptionUnsafeAssertions<T> : ReferenceTypeAssertions<Opti
         return new AndConstraint<LanguageExtOptionUnsafeAssertions<T>>(this);
     }
 
-    public AndConstraint<LanguageExtOptionUnsafeAssertions<T>> BeSome(T expected, string because = "", params object[] becauseArgs)
+    public AndConstraint<LanguageExtOptionUnsafeAssertions<T>> BeSome(Action<T> action, string because = "", params object[] becauseArgs)
+    {
+        BeSome(because, becauseArgs);
+        ignore(Subject.IfSomeUnsafe(action));
+
+        return new AndConstraint<LanguageExtOptionUnsafeAssertions<T>>(this);
+    }
+
+    public AndConstraint<LanguageExtOptionUnsafeAssertions<T>> Be(T expected, string because = "", params object[] becauseArgs)
     {
         Execute.Assertion
             .BecauseOf(because, becauseArgs)

@@ -6,11 +6,11 @@ namespace FluentAssertions.LanguageExt.Tests;
 
 public class LanguageExtOptionUnsafeAssertionsTest
 {
-    private static OptionUnsafe<int> SomeResult() => Prelude.SomeUnsafe(123);
+    private static OptionUnsafe<int> SomeResult() => Prelude.SomeUnsafe(8);
     private static OptionUnsafe<int> NoneResult() => OptionUnsafe<int>.None;
 
     [Fact]
-    public void ShouldBeSome_with_SomeUnsafe_returns_expected_result()
+    public void BeSome_with_SomeUnsafe_returns_expected_result()
     {
         var action = () => SomeResult().Should().BeSome();
 
@@ -18,7 +18,7 @@ public class LanguageExtOptionUnsafeAssertionsTest
     }
 
     [Fact]
-    public void ShouldBeSome_with_NoneUnsafe_returns_expected_result()
+    public void BeSome_with_NoneUnsafe_returns_expected_result()
     {
         var action = () => NoneResult().Should().BeSome();
 
@@ -26,7 +26,23 @@ public class LanguageExtOptionUnsafeAssertionsTest
     }
 
     [Fact]
-    public void ShouldBeNone_with_SomeUnsafe_returns_expected_result()
+    public void BeSome_with_expected_SomeUnsafe_returns_expected_result()
+    {
+        var action = () => SomeResult().Should().BeSome(s => s.Should().Be(8));
+
+        action.Should().NotThrow();
+    }
+
+    [Fact]
+    public void BeSome_with_unexpected_SomeUnsafe_returns_expected_result()
+    {
+        var action = () => SomeResult().Should().BeSome(s => s.Should().Be(4));
+
+        action.Should().Throw<XunitException>();
+    }
+
+    [Fact]
+    public void BeNone_with_SomeUnsafe_returns_expected_result()
     {
         var action = () => SomeResult().Should().BeNone();
 
@@ -34,7 +50,7 @@ public class LanguageExtOptionUnsafeAssertionsTest
     }
 
     [Fact]
-    public void ShouldBeNone_with_NoneUnsafe_returns_expected_result()
+    public void BeNone_with_NoneUnsafe_returns_expected_result()
     {
         var action = () => NoneResult().Should().BeNone();
 
@@ -42,25 +58,25 @@ public class LanguageExtOptionUnsafeAssertionsTest
     }
 
     [Fact]
-    public void ShouldContain_with_SomeUnsafe_returns_expected_result()
+    public void Be_with_SomeUnsafe_returns_expected_result()
     {
-        var action = () => SomeResult().Should().BeSome(123);
+        var action = () => SomeResult().Should().Be(8);
 
         action.Should().NotThrow();
     }
 
     [Fact]
-    public void ShouldContain_with_unexpected_SomeUnsafe_returns_expected_result()
+    public void Be_with_unexpected_SomeUnsafe_returns_expected_result()
     {
-        var action = () => SomeResult().Should().BeSome(456);
+        var action = () => SomeResult().Should().Be(456);
 
         action.Should().Throw<XunitException>();
     }
 
     [Fact]
-    public void ShouldContain_with_NoneUnsafe_returns_expected_result()
+    public void Be_with_NoneUnsafe_returns_expected_result()
     {
-        var action = () => NoneResult().Should().BeSome(123);
+        var action = () => NoneResult().Should().Be(8);
 
         action.Should().Throw<XunitException>();
     }

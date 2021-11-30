@@ -10,7 +10,7 @@ public class LanguageExtEitherAsyncAssertionsTest
     private static EitherAsync<int, string> RightResult() => "abc";
 
     [Fact]
-    public void ShouldBeLeft_with_LeftAsync_returns_expected_result()
+    public void BeLeft_with_LeftAsync_returns_expected_result()
     {
         var action = () => LeftResult().Should().BeLeft();
 
@@ -18,7 +18,7 @@ public class LanguageExtEitherAsyncAssertionsTest
     }
 
     [Fact]
-    public void ShouldBeLeft_with_RightAsync_returns_expected_result()
+    public void BeLeft_with_RightAsync_returns_expected_result()
     {
         var action = () => RightResult().Should().BeLeft();
 
@@ -26,7 +26,7 @@ public class LanguageExtEitherAsyncAssertionsTest
     }
 
     [Fact]
-    public void ShouldBeRight_with_LeftAsync_returns_expected_result()
+    public void BeRight_with_LeftAsync_returns_expected_result()
     {
         var action = () => LeftResult().Should().BeRight();
 
@@ -34,7 +34,7 @@ public class LanguageExtEitherAsyncAssertionsTest
     }
 
     [Fact]
-    public void ShouldBeRight_with_RightAsync_returns_expected_result()
+    public void BeRight_with_RightAsync_returns_expected_result()
     {
         var action = () => RightResult().Should().BeRight();
 

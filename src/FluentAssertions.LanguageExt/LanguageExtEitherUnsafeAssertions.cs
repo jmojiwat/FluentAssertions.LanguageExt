@@ -24,6 +24,14 @@ public class LanguageExtEitherUnsafeAssertions<TL, TR> : ReferenceTypeAssertions
         return new AndConstraint<LanguageExtEitherUnsafeAssertions<TL, TR>>(this);
     }
 
+    public AndConstraint<LanguageExtEitherUnsafeAssertions<TL, TR>> BeLeft(Action<TL> action, string because = "", params object[] becauseArgs)
+    {
+        BeLeft(because, becauseArgs);
+        Subject.IfLeftUnsafe(action);
+
+        return new AndConstraint<LanguageExtEitherUnsafeAssertions<TL, TR>>(this);
+    }
+
     public AndConstraint<LanguageExtEitherUnsafeAssertions<TL, TR>> BeRight(string because = "", params object[] becauseArgs)
     {
         Execute.Assertion
@@ -32,6 +40,14 @@ public class LanguageExtEitherUnsafeAssertions<TL, TR> : ReferenceTypeAssertions
             .Given(() => Subject)
             .ForCondition(subject => subject.IsRight)
             .FailWith("but found to be Left.");
+
+        return new AndConstraint<LanguageExtEitherUnsafeAssertions<TL, TR>>(this);
+    }
+
+    public AndConstraint<LanguageExtEitherUnsafeAssertions<TL, TR>> BeRight(Action<TR> action, string because = "", params object[] becauseArgs)
+    {
+        BeRight(because, becauseArgs);
+        Subject.IfRightUnsafe(action);
 
         return new AndConstraint<LanguageExtEitherUnsafeAssertions<TL, TR>>(this);
     }

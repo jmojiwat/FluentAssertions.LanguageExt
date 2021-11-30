@@ -6,11 +6,11 @@ namespace FluentAssertions.LanguageExt.Tests;
 
 public class LanguageExtEitherAssertionsTest
 {
-    private static Either<int, string> LeftResult() => Prelude.Left(123);
-    private static Either<int, string> RightResult() => Prelude.Right("abc");
+    private static Either<int, string> LeftResult() => Prelude.Left(8);
+    private static Either<int, string> RightResult() => Prelude.Right("a");
 
     [Fact]
-    public void ShouldBeLeft_with_Left_returns_expected_result()
+    public void BeLeft_with_Left_returns_expected_result()
     {
         var action = () => LeftResult().Should().BeLeft();
 
@@ -18,7 +18,23 @@ public class LanguageExtEitherAssertionsTest
     }
 
     [Fact]
-    public void ShouldBeLeft_with_Right_returns_expected_result()
+    public void BeLeft_with_expected_Left_returns_expected_result()
+    {
+        var action = () => LeftResult().Should().BeLeft(p => p.Should().Be(8));
+
+        action.Should().NotThrow();
+    }
+
+    [Fact]
+    public void BeLeft_with_unexpected_Left_returns_expected_result()
+    {
+        var action = () => LeftResult().Should().BeLeft(p => p.Should().Be(4));
+
+        action.Should().Throw<XunitException>();
+    }
+
+    [Fact]
+    public void BeLeft_with_Right_returns_expected_result()
     {
         var action = () => RightResult().Should().BeLeft();
 
@@ -26,15 +42,7 @@ public class LanguageExtEitherAssertionsTest
     }
 
     [Fact]
-    public void ShouldBeRight_with_Left_returns_expected_result()
-    {
-        var action = () => LeftResult().Should().BeRight();
-
-        action.Should().Throw<XunitException>();
-    }
-
-    [Fact]
-    public void ShouldBeRight_with_Right_returns_expected_result()
+    public void BeRight_with_Right_returns_expected_result()
     {
         var action = () => RightResult().Should().BeRight();
 
@@ -42,33 +50,58 @@ public class LanguageExtEitherAssertionsTest
     }
 
     [Fact]
-    public void ShouldContain_with_expected_Left_returns_expected_result()
+    public void BeRight_with_expected_Right_returns_expected_result()
     {
-        var action = () => LeftResult().Should().Be(123);
+        var action = () => RightResult().Should().BeRight(p => p.Should().Be("a"));
 
         action.Should().NotThrow();
     }
 
     [Fact]
-    public void ShouldContain_with_expected_Right_returns_expected_result()
+    public void BeRight_with_unexpected_Right_returns_expected_result()
     {
-        var action = () => RightResult().Should().Be("abc");
-
-        action.Should().NotThrow();
-    }
-
-    [Fact]
-    public void ShouldContain_with_unexpected_Left_returns_expected_result()
-    {
-        var action = () => LeftResult().Should().Be(456);
+        var action = () => RightResult().Should().BeRight(p => p.Should().Be("z"));
 
         action.Should().Throw<XunitException>();
     }
 
     [Fact]
-    public void ShouldContain_with_unexpected_Right_returns_expected_result()
+    public void BeRight_with_Left_returns_expected_result()
     {
-        var action = () => RightResult().Should().Be("def");
+        var action = () => LeftResult().Should().BeRight();
+
+        action.Should().Throw<XunitException>();
+    }
+
+
+    [Fact]
+    public void Be_with_expected_Left_returns_expected_result()
+    {
+        var action = () => LeftResult().Should().Be(8);
+
+        action.Should().NotThrow();
+    }
+
+    [Fact]
+    public void Be_with_expected_Right_returns_expected_result()
+    {
+        var action = () => RightResult().Should().Be("a");
+
+        action.Should().NotThrow();
+    }
+
+    [Fact]
+    public void Be_with_unexpected_Left_returns_expected_result()
+    {
+        var action = () => LeftResult().Should().Be(4);
+
+        action.Should().Throw<XunitException>();
+    }
+
+    [Fact]
+    public void Be_with_unexpected_Right_returns_expected_result()
+    {
+        var action = () => RightResult().Should().Be("z");
 
         action.Should().Throw<XunitException>();
     }

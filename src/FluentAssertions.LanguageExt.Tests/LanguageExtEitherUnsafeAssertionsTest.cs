@@ -10,7 +10,7 @@ public class LanguageExtEitherUnsafeAssertionsTest
     private static EitherUnsafe<int, string> RightResult() => Prelude.RightUnsafe("abc");
 
     [Fact]
-    public void ShouldBeLeft_with_LeftUnsafe_returns_expected_result()
+    public void BeLeft_with_LeftUnsafe_returns_expected_result()
     {
         var action = () => LeftResult().Should().BeLeft();
 
@@ -18,7 +18,7 @@ public class LanguageExtEitherUnsafeAssertionsTest
     }
 
     [Fact]
-    public void ShouldBeLeft_with_RightUnsafe_returns_expected_result()
+    public void BeLeft_with_RightUnsafe_returns_expected_result()
     {
         var action = () => RightResult().Should().BeLeft();
 
@@ -26,7 +26,7 @@ public class LanguageExtEitherUnsafeAssertionsTest
     }
 
     [Fact]
-    public void ShouldBeRight_with_LeftUnsafe_returns_expected_result()
+    public void BeRight_with_LeftUnsafe_returns_expected_result()
     {
         var action = () => LeftResult().Should().BeRight();
 
@@ -34,7 +34,7 @@ public class LanguageExtEitherUnsafeAssertionsTest
     }
 
     [Fact]
-    public void ShouldBeRight_with_RightUnsafe_returns_expected_result()
+    public void BeRight_with_RightUnsafe_returns_expected_result()
     {
         var action = () => RightResult().Should().BeRight();
 

@@ -15,7 +15,7 @@ public class LanguageExtOptionAsyncBoolAssertions : ReferenceTypeAssertions<Opti
     {
         Execute.Assertion
             .BecauseOf(because, becauseArgs)
-            .WithExpectation("Expected {context:optionbool} to be None{reason}, ")
+            .WithExpectation("Expected {context:optionasyncbool} to be None{reason}, ")
             .Given(() => Subject)
             .ForCondition(subject => Run(() => subject.IsNone))
             .FailWith("but found to be Some.");
@@ -23,34 +23,47 @@ public class LanguageExtOptionAsyncBoolAssertions : ReferenceTypeAssertions<Opti
         return new AndConstraint<LanguageExtOptionAsyncBoolAssertions>(this);
     }
 
-
-    public AndConstraint<LanguageExtOptionAsyncBoolAssertions> BeSomeTrue(string because = "", params object[] becauseArgs)
+    public AndConstraint<LanguageExtOptionAsyncBoolAssertions> BeSome(string because = "", params object[] becauseArgs)
     {
         Execute.Assertion
             .BecauseOf(because, becauseArgs)
+            .WithExpectation("Expected {context:optionasyncbool} to be Some{reason}, ")
+            .Given(() => Subject)
+            .ForCondition(subject => Run(() => subject.IsSome))
+            .FailWith("but found to be None.");
+
+        return new AndConstraint<LanguageExtOptionAsyncBoolAssertions>(this);
+    }
+
+    public AndConstraint<LanguageExtOptionAsyncBoolAssertions> BeTrue(string because = "", params object[] becauseArgs)
+    {
+        Execute.Assertion
+            .BecauseOf(because, becauseArgs)
+            .WithExpectation("Expected {context:optionasyncbool} to be Some true{reason}, ")
             .Given(() => Subject)
             .ForCondition(subject => Run(() => subject.IsSome))
             .FailWith("but found to be None.")
             .Then
             .ForCondition(subject => Run(() => subject == true))
-            .FailWith("Expected {context:optionbool} to be Some true.");
+            .FailWith("but found to be Some false.");
 
         return new AndConstraint<LanguageExtOptionAsyncBoolAssertions>(this);
     }
 
-    public AndConstraint<LanguageExtOptionAsyncBoolAssertions> BeSomeFalse(string because = "", params object[] becauseArgs)
+    public AndConstraint<LanguageExtOptionAsyncBoolAssertions> BeFalse(string because = "", params object[] becauseArgs)
     {
         Execute.Assertion
             .BecauseOf(because, becauseArgs)
+            .WithExpectation("Expected {context:optionasyncbool} to be Some false{reason}, ")
             .Given(() => Subject)
             .ForCondition(subject => Run(() => subject.IsSome))
             .FailWith("but found to be None.")
             .Then
             .ForCondition(subject => Run(() => subject == false))
-            .FailWith("Expected {context:optionbool} to be Some false.");
+            .FailWith("but found to be Some true.");
 
         return new AndConstraint<LanguageExtOptionAsyncBoolAssertions>(this);
     }
 
-    protected override string Identifier => "optionbool";
+    protected override string Identifier => "optionasyncbool";
 }

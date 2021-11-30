@@ -36,7 +36,15 @@ public class LanguageExtOptionAssertions<T> : ReferenceTypeAssertions<Option<T>,
         return new AndConstraint<LanguageExtOptionAssertions<T>>(this);
     }
 
-    public AndConstraint<LanguageExtOptionAssertions<T>> BeSome(T expected, string because = "", params object[] becauseArgs)
+    public AndConstraint<LanguageExtOptionAssertions<T>> BeSome(Action<T> action, string because = "", params object[] becauseArgs)
+    {
+        BeSome(because, becauseArgs);
+        Subject.IfSome(action);
+
+        return new AndConstraint<LanguageExtOptionAssertions<T>>(this);
+    }
+
+    public AndConstraint<LanguageExtOptionAssertions<T>> Be(T expected, string because = "", params object[] becauseArgs)
     {
         Execute.Assertion
             .BecauseOf(because, becauseArgs)
@@ -45,7 +53,7 @@ public class LanguageExtOptionAssertions<T> : ReferenceTypeAssertions<Option<T>,
             .ForCondition(subject => subject.IsSome)
             .FailWith("but found to be None.")
             .Then
-            .ForCondition(subject => subject == expected)
+            .ForCondition(subject => subject.Equals(expected))
             .FailWith("but found Some {0}.", Subject);
 
         return new AndConstraint<LanguageExtOptionAssertions<T>>(this);

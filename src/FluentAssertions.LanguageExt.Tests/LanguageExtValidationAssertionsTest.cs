@@ -10,7 +10,7 @@ public class LanguageExtValidationAssertionsTest
     private static Validation<int, string> FailResult() => 123;
 
     [Fact]
-    public void ShouldBeFail_with_Fail_returns_expected_result()
+    public void BeFail_with_Fail_returns_expected_result()
     {
         var action = () => FailResult().Should().BeFail();
 
@@ -18,7 +18,7 @@ public class LanguageExtValidationAssertionsTest
     }
 
     [Fact]
-    public void ShouldBeFail_with_Success_returns_expected_result()
+    public void BeFail_with_Success_returns_expected_result()
     {
         var action = () => SuccessResult().Should().BeFail();
 
@@ -26,7 +26,7 @@ public class LanguageExtValidationAssertionsTest
     }
 
     [Fact]
-    public void ShouldBeSuccess_with_Fail_returns_expected_result()
+    public void BeSuccess_with_Fail_returns_expected_result()
     {
         var action = () => FailResult().Should().BeSuccess();
 
@@ -34,7 +34,7 @@ public class LanguageExtValidationAssertionsTest
     }
 
     [Fact]
-    public void ShouldBeSuccess_with_Success_returns_expected_result()
+    public void BeSuccess_with_Success_returns_expected_result()
     {
         var action = () => SuccessResult().Should().BeSuccess();
 

@@ -19,7 +19,7 @@ public class LanguageExtTryOptionAssertions<T> : ReferenceTypeAssertions<TryOpti
             .WithExpectation("Expected {context:tryoption} to be Fail{reason}, ")
             .Given(() => Subject)
             .ForCondition(subject => subject.IsFail())
-            .FailWith("but found to be Fail.");
+            .FailWith("but found to be not.");
 
         return new AndConstraint<LanguageExtTryOptionAssertions<T>>(this);
     }
@@ -28,9 +28,18 @@ public class LanguageExtTryOptionAssertions<T> : ReferenceTypeAssertions<TryOpti
     {
         Execute.Assertion
             .BecauseOf(because, becauseArgs)
+            .WithExpectation("Expected {context:tryoption} to be Some{reason}, ")
             .Given(() => Subject)
             .ForCondition(subject => subject.IsSome())
-            .FailWith("Expected {context:tryoption} to be Some.");
+            .FailWith("but found to be not.");
+
+        return new AndConstraint<LanguageExtTryOptionAssertions<T>>(this);
+    }
+
+    public AndConstraint<LanguageExtTryOptionAssertions<T>> BeSome(Action<T> action, string because = "", params object[] becauseArgs)
+    {
+        BeSome(because, becauseArgs);
+        Subject.IfSome(action);
 
         return new AndConstraint<LanguageExtTryOptionAssertions<T>>(this);
     }
@@ -39,9 +48,25 @@ public class LanguageExtTryOptionAssertions<T> : ReferenceTypeAssertions<TryOpti
     {
         Execute.Assertion
             .BecauseOf(because, becauseArgs)
+            .WithExpectation("Expected {context:tryoption} to be None{reason}, ")
             .Given(() => Subject)
             .ForCondition(subject => subject.IsNone())
-            .FailWith("Expected {context:tryoption} to be None.");
+            .FailWith("but found to be not.");
+
+        return new AndConstraint<LanguageExtTryOptionAssertions<T>>(this);
+    }
+
+    public AndConstraint<LanguageExtTryOptionAssertions<T>> Be(T expected, string because = "", params object[] becauseArgs)
+    {
+        Execute.Assertion
+            .BecauseOf(because, becauseArgs)
+            .WithExpectation("Expected {context:tryoption} to be {0}{reason}, ", expected)
+            .Given(() => Subject)
+            .ForCondition(subject => subject.IsSome())
+            .FailWith("but found to be None.")
+            .Then
+            .ForCondition(subject => subject() == expected)
+            .FailWith("but found to be {0}.", Subject());
 
         return new AndConstraint<LanguageExtTryOptionAssertions<T>>(this);
     }
@@ -50,9 +75,10 @@ public class LanguageExtTryOptionAssertions<T> : ReferenceTypeAssertions<TryOpti
     {
         Execute.Assertion
             .BecauseOf(because, becauseArgs)
+            .WithExpectation("Expected {context:tryoption} to be None or Fail{reason}, ")
             .Given(() => Subject)
             .ForCondition(subject => subject.IsNoneOrFail())
-            .FailWith("Expected {context:tryoption} to be None or Fail.");
+            .FailWith("but found to be not.");
 
         return new AndConstraint<LanguageExtTryOptionAssertions<T>>(this);
     }

@@ -8,11 +8,11 @@ namespace FluentAssertions.LanguageExt.Tests;
 public class LanguageExtTryOptionAssertionsTest
 {
     private static TryOption<int> FailResult() => () => throw new Exception();
-    private static TryOption<int> SomeResult() => () => Prelude.Some(123);
+    private static TryOption<int> SomeResult() => () => Prelude.Some(8);
     private static TryOption<int> NoneResult() => () => Option<int>.None;
 
     [Fact]
-    public void ShouldBeSome_with_Some_returns_expected_result()
+    public void BeSome_with_Some_returns_expected_result()
     {
         var action = () => SomeResult().Should().BeSome();
 
@@ -20,7 +20,7 @@ public class LanguageExtTryOptionAssertionsTest
     }
 
     [Fact]
-    public void ShouldBeSome_with_None_returns_expected_result()
+    public void BeSome_with_None_returns_expected_result()
     {
         var action = () => NoneResult().Should().BeSome();
 
@@ -28,7 +28,7 @@ public class LanguageExtTryOptionAssertionsTest
     }
 
     [Fact]
-    public void ShouldBeSome_with_Fail_returns_expected_result()
+    public void BeSome_with_Fail_returns_expected_result()
     {
         var action = () => FailResult().Should().BeSome();
 
@@ -36,7 +36,23 @@ public class LanguageExtTryOptionAssertionsTest
     }
 
     [Fact]
-    public void ShouldBeNone_with_Some_returns_expected_result()
+    public void BeSome_with_expected_Some_returns_expected_result()
+    {
+        var action = () => SomeResult().Should().BeSome(s => s.Should().Be(8));
+
+        action.Should().NotThrow();
+    }
+
+    [Fact]
+    public void BeSome_with_unexpected_Some_returns_expected_result()
+    {
+        var action = () => SomeResult().Should().BeSome(s => s.Should().Be(4));
+
+        action.Should().Throw<XunitException>();
+    }
+
+    [Fact]
+    public void BeNone_with_Some_returns_expected_result()
     {
         var action = () => SomeResult().Should().BeNone();
 
@@ -44,7 +60,7 @@ public class LanguageExtTryOptionAssertionsTest
     }
 
     [Fact]
-    public void ShouldBeNone_with_None_returns_expected_result()
+    public void BeNone_with_None_returns_expected_result()
     {
         var action = () => NoneResult().Should().BeNone();
 
@@ -52,7 +68,7 @@ public class LanguageExtTryOptionAssertionsTest
     }
 
     [Fact]
-    public void ShouldBeNone_with_Fail_returns_expected_result()
+    public void BeNone_with_Fail_returns_expected_result()
     {
         var action = () => FailResult().Should().BeNone();
 
@@ -60,7 +76,31 @@ public class LanguageExtTryOptionAssertionsTest
     }
 
     [Fact]
-    public void ShouldBeFail_with_Some_returns_expected_result()
+    public void BeNoneOrFail_with_Some_returns_expected_result()
+    {
+        var action = () => SomeResult().Should().BeNoneOrFail();
+
+        action.Should().Throw<XunitException>();
+    }
+
+    [Fact]
+    public void BeNoneOrFail_with_None_returns_expected_result()
+    {
+        var action = () => NoneResult().Should().BeNoneOrFail();
+
+        action.Should().NotThrow();
+    }
+
+    [Fact]
+    public void BeNoneOrFail_with_Fail_returns_expected_result()
+    {
+        var action = () => FailResult().Should().BeNoneOrFail();
+
+        action.Should().NotThrow();
+    }
+
+    [Fact]
+    public void BeFail_with_Some_returns_expected_result()
     {
         var action = () => SomeResult().Should().BeFail();
 
@@ -68,7 +108,7 @@ public class LanguageExtTryOptionAssertionsTest
     }
 
     [Fact]
-    public void ShouldBeFail_with_None_returns_expected_result()
+    public void BeFail_with_None_returns_expected_result()
     {
         var action = () => NoneResult().Should().BeFail();
 
@@ -76,10 +116,43 @@ public class LanguageExtTryOptionAssertionsTest
     }
 
     [Fact]
-    public void ShouldBeFail_with_Fail_returns_expected_result()
+    public void BeFail_with_Fail_returns_expected_result()
     {
         var action = () => FailResult().Should().BeFail();
 
         action.Should().NotThrow();
     }
+
+    [Fact]
+    public void Be_with_expected_Some_returns_expected_result()
+    {
+        var action = () => SomeResult().Should().Be(8);
+
+        action.Should().NotThrow();
+    }
+
+    [Fact]
+    public void Be_with_unexpected_Some_returns_expected_result()
+    {
+        var action = () => SomeResult().Should().Be(4);
+
+        action.Should().Throw<XunitException>();
+    }
+
+    [Fact]
+    public void Be_with_None_returns_expected_result()
+    {
+        var action = () => NoneResult().Should().Be(8);
+
+        action.Should().Throw<XunitException>();
+    }
+
+    [Fact]
+    public void Be_with_Fail_returns_expected_result()
+    {
+        var action = () => FailResult().Should().Be(4);
+
+        action.Should().Throw<XunitException>();
+    }
+
 }
