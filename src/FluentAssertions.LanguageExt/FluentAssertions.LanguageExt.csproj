@@ -1,22 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
+    <TargetFrameworks>net5.0;net6.0</TargetFrameworks>
+    <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>disable</Nullable>
-    <Version>0.2.0</Version>
+    <Version>0.2.1</Version>
     <Authors>Jacob Mojiwat</Authors>
     <PackageProjectUrl>https://github.com/jmojiwat/FluentAssertions.LanguageExt</PackageProjectUrl>
     <Copyright>Copyright © 2021. Jacob Mojiwat</Copyright>
     <RepositoryUrl>https://github.com/jmojiwat/FluentAssertions.LanguageExt</RepositoryUrl>
     <PackageTags>FluentAssertions;LanguageExt</PackageTags>
-    <PackageReleaseNotes>Initial release.</PackageReleaseNotes>
+    <PackageReleaseNotes>Added support for .NET 5</PackageReleaseNotes>
     <Description>LanguageExt extensions for FluentAssertions.</Description>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageReadmeFile>README.md</PackageReadmeFile>
       <IncludeSymbols>true</IncludeSymbols>
 	<EmbedUntrackedSources>true</EmbedUntrackedSources>
       <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+      <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 	  
   </PropertyGroup>
 
