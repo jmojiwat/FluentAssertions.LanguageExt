@@ -13,7 +13,7 @@ namespace FluentAssertions.LanguageExt
 
         protected override string Identifier => "validation";
 
-        public AndConstraint<LanguageExtValidationAssertions<TFail, TSuccess>> BeFail(string because = "", params object[] becauseArgs)
+        public AndWhichConstraint<LanguageExtValidationAssertions<TFail, TSuccess>, TFail> BeFail(string because = "", params object[] becauseArgs)
         {
             Execute.Assertion
                 .BecauseOf(because, becauseArgs)
@@ -22,10 +22,10 @@ namespace FluentAssertions.LanguageExt
                 .ForCondition(subject => subject.IsFail)
                 .FailWith("but found to be {0}.", Subject);
 
-            return new AndConstraint<LanguageExtValidationAssertions<TFail, TSuccess>>(this);
+            return new AndWhichConstraint<LanguageExtValidationAssertions<TFail, TSuccess>, TFail>(this, Subject.FailAsEnumerable());
         }
 
-        public AndConstraint<LanguageExtValidationAssertions<TFail, TSuccess>> BeSuccess(string because = "", params object[] becauseArgs)
+        public AndWhichConstraint<LanguageExtValidationAssertions<TFail, TSuccess>, TSuccess> BeSuccess(string because = "", params object[] becauseArgs)
         {
             Execute.Assertion
                 .BecauseOf(because, becauseArgs)
@@ -34,7 +34,7 @@ namespace FluentAssertions.LanguageExt
                 .ForCondition(subject => subject.IsSuccess)
                 .FailWith("but found to be {0}.", Subject);
 
-            return new AndConstraint<LanguageExtValidationAssertions<TFail, TSuccess>>(this);
+            return new AndWhichConstraint<LanguageExtValidationAssertions<TFail, TSuccess>, TSuccess>(this, Subject.SuccessAsEnumerable());
         }
 
         public AndConstraint<LanguageExtValidationAssertions<TFail, TSuccess>> BeSuccess(Action<TSuccess> action, string because = "", params object[] becauseArgs)

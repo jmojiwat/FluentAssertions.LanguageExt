@@ -26,7 +26,7 @@ namespace FluentAssertions.LanguageExt
             return new AndConstraint<LanguageExtOptionUnsafeAssertions<T>>(this);
         }
 
-        public AndConstraint<LanguageExtOptionUnsafeAssertions<T>> BeSome(string because = "", params object[] becauseArgs)
+        public AndWhichConstraint<LanguageExtOptionUnsafeAssertions<T>, T> BeSome(string because = "", params object[] becauseArgs)
         {
             Execute.Assertion
                 .BecauseOf(because, becauseArgs)
@@ -35,7 +35,7 @@ namespace FluentAssertions.LanguageExt
                 .ForCondition(subject => subject.IsSome)
                 .FailWith("but found to be None.");
 
-            return new AndConstraint<LanguageExtOptionUnsafeAssertions<T>>(this);
+            return new AndWhichConstraint<LanguageExtOptionUnsafeAssertions<T>, T>(this, Subject);
         }
 
         public AndConstraint<LanguageExtOptionUnsafeAssertions<T>> BeSome(Action<T> action, string because = "", params object[] becauseArgs)

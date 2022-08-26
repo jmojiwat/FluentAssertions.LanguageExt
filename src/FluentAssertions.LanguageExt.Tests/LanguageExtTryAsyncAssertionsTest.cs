@@ -42,6 +42,22 @@ public class LanguageExtTryAsyncAssertionsTest
         action.Should().Throw<XunitException>();
     }
 
+    [Fact]
+    public void BeSuccess_with_expected_Success_using_which_returns_expected_result()
+    {
+        var action = () => SuccessResult().Should().BeSuccess().Which.Should().Be("success");
+
+        action.Should().NotThrow();
+    }
+
+    [Fact]
+    public void BeSuccess_with_unexpected_Success_using_which_returns_expected_result()
+    {
+        var action = () => SuccessResult().Should().BeSuccess().Which.Should().Be("fail");
+
+        action.Should().Throw<XunitException>();
+    }
+
 
     [Fact]
     public void BeFail_with_Success_returns_expected_result()
@@ -83,4 +99,19 @@ public class LanguageExtTryAsyncAssertionsTest
         action.Should().Throw<XunitException>();
     }
 
+    [Fact]
+    public void BeFail_with_expected_Exception_returns_expected_result()
+    {
+        var action = () => FailResult().Should().BeFail().Which.ToException().Should().BeOfType<Exception>();
+
+        action.Should().NotThrow();
+    }
+
+    [Fact]
+    public void BeFail_with_unexpected_Exception_returns_expected_result()
+    {
+        var action = () => FailResult().Should().BeFail().Which.ToException().Should().BeOfType<ArgumentException>();
+
+        action.Should().Throw<XunitException>();
+    }
 }

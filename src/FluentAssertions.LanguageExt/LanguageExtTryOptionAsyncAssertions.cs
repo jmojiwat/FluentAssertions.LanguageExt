@@ -14,7 +14,7 @@ namespace FluentAssertions.LanguageExt
 
         protected override string Identifier => "tryoptionasync";
 
-        public AndConstraint<LanguageExtTryOptionAsyncAssertions<T>> BeFail(string because = "", params object[] becauseArgs)
+        public AndWhichConstraint<LanguageExtTryOptionAsyncAssertions<T>, Exception> BeFail(string because = "", params object[] becauseArgs)
         {
             Execute.Assertion
                 .BecauseOf(because, becauseArgs)
@@ -23,10 +23,10 @@ namespace FluentAssertions.LanguageExt
                 .ForCondition(subject => Run(subject.IsFail))
                 .FailWith("but found to be not.");
 
-            return new AndConstraint<LanguageExtTryOptionAsyncAssertions<T>>(this);
+            return new AndWhichConstraint<LanguageExtTryOptionAsyncAssertions<T>, Exception>(this, Run(() => Subject.ToEither()).LeftAsEnumerable());
         }
 
-        public AndConstraint<LanguageExtTryOptionAsyncAssertions<T>> BeSome(string because = "", params object[] becauseArgs)
+        public AndWhichConstraint<LanguageExtTryOptionAsyncAssertions<T>, T> BeSome(string because = "", params object[] becauseArgs)
         {
             Execute.Assertion
                 .BecauseOf(because, becauseArgs)
@@ -35,7 +35,7 @@ namespace FluentAssertions.LanguageExt
                 .ForCondition(subject => Run(subject.IsSome))
                 .FailWith("but found to be not.");
 
-            return new AndConstraint<LanguageExtTryOptionAsyncAssertions<T>>(this);
+            return new AndWhichConstraint<LanguageExtTryOptionAsyncAssertions<T>, T>(this, Run(() => Subject.AsEnumerable()));
         }
 
         public AndConstraint<LanguageExtTryOptionAsyncAssertions<T>> BeSome(Action<T> action, string because = "", params object[] becauseArgs)

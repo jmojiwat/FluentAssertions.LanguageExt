@@ -30,6 +30,7 @@ var optionnone = Option<int>.None;
 option.Should().BeSome();
 option.Should().BeSome(8);
 option.Should().BeSome(s => s.Should().Be(8));
+option.Should().BeSome().Which.Should().Be(8);
 
 optionnone.Should().BeNone();
 ```
@@ -56,10 +57,12 @@ Either<int, string> right = Prelude.Right("a");
 
 left.Should().BeLeft();
 left.Should().BeLeft(l => l.Should().Be(8));
+left.Should().BeLeft().Which.Should().Be(8);
 left.Should().Be(8);
 
 right.Should().BeRight();
 right.Should().BeRight(r => r.Should().Be("a"));
+right.Should().BeRight().Which.Should().Be("a");
 right.Should().Be("a");
 ```
 

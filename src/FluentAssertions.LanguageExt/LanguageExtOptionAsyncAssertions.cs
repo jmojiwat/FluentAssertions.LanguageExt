@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using FluentAssertions.Execution;
 using FluentAssertions.Primitives;
 using LanguageExt;
@@ -26,7 +26,7 @@ namespace FluentAssertions.LanguageExt
             return new AndConstraint<LanguageExtOptionAsyncAssertions<T>>(this);
         }
 
-        public AndConstraint<LanguageExtOptionAsyncAssertions<T>> BeSome(string because = "", params object[] becauseArgs)
+        public AndWhichConstraint<LanguageExtOptionAsyncAssertions<T>, T> BeSome(string because = "", params object[] becauseArgs)
         {
             Execute.Assertion
                 .BecauseOf(because, becauseArgs)
@@ -35,7 +35,7 @@ namespace FluentAssertions.LanguageExt
                 .ForCondition(subject => Run(() => subject.IsSome))
                 .FailWith("but found to be None.");
 
-            return new AndConstraint<LanguageExtOptionAsyncAssertions<T>>(this);
+            return new AndWhichConstraint<LanguageExtOptionAsyncAssertions<T>, T>(this, Run(() => Subject.AsEnumerable()));
         }
 
         public AndConstraint<LanguageExtOptionAsyncAssertions<T>> BeSome(Action<T> action, string because = "", params object[] becauseArgs)

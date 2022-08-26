@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using FluentAssertions.Execution;
 using FluentAssertions.Primitives;
 using LanguageExt;
@@ -13,7 +13,7 @@ namespace FluentAssertions.LanguageExt
 
         protected override string Identifier => "try";
 
-        public AndConstraint<LanguageExtTryAssertions<T>> BeFail(string because = "", params object[] becauseArgs)
+        public AndWhichConstraint<LanguageExtTryAssertions<T>, Exception> BeFail(string because = "", params object[] becauseArgs)
         {
             Execute.Assertion
                 .BecauseOf(because, becauseArgs)
@@ -22,13 +22,11 @@ namespace FluentAssertions.LanguageExt
                 .ForCondition(subject => subject.IsFail())
                 .FailWith("but found to be not.");
 
-            return new AndConstraint<LanguageExtTryAssertions<T>>(this);
+            return new AndWhichConstraint<LanguageExtTryAssertions<T>, Exception>(this, Subject.ToEither().LeftAsEnumerable());
         }
 
-        public AndConstraint<LanguageExtTryAssertions<T>> BeSuccess(string because = "", params object[] becauseArgs)
+        public AndWhichConstraint<LanguageExtTryAssertions<T>, T> BeSuccess(string because = "", params object[] becauseArgs)
         {
-        
-
             Execute.Assertion
                 .BecauseOf(because, becauseArgs)
                 .WithExpectation("Expected {context:try} to be Success{reason}, ")
@@ -36,7 +34,7 @@ namespace FluentAssertions.LanguageExt
                 .ForCondition(subject => subject.IsSucc())
                 .FailWith("but found to be not.");
 
-            return new AndConstraint<LanguageExtTryAssertions<T>>(this);
+            return new AndWhichConstraint<LanguageExtTryAssertions<T>, T>(this, Subject.AsEnumerable());
         }
 
         public AndConstraint<LanguageExtTryAssertions<T>> BeSuccess(Action<T> action, string because = "", params object[] becauseArgs)
