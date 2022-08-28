@@ -13,7 +13,7 @@ namespace FluentAssertions.LanguageExt
 
         protected override string Identifier => "either";
 
-        public AndConstraint<LanguageExtEitherAssertions<TL, TR>> BeLeft(string because = "", params object[] becauseArgs)
+        public AndWhichConstraint<LanguageExtEitherAssertions<TL, TR>, TL> BeLeft(string because = "", params object[] becauseArgs)
         {
             Execute.Assertion
                 .BecauseOf(because, becauseArgs)
@@ -22,7 +22,7 @@ namespace FluentAssertions.LanguageExt
                 .ForCondition(subject => subject.IsLeft)
                 .FailWith("but found to be Right.");
 
-            return new AndConstraint<LanguageExtEitherAssertions<TL, TR>>(this);
+            return new AndWhichConstraint<LanguageExtEitherAssertions<TL, TR>, TL>(this, Subject.LeftAsEnumerable());
         }
 
         public AndConstraint<LanguageExtEitherAssertions<TL, TR>> BeLeft(Action<TL> action, string because = "", params object[] becauseArgs)
@@ -33,7 +33,7 @@ namespace FluentAssertions.LanguageExt
             return new AndConstraint<LanguageExtEitherAssertions<TL, TR>>(this);
         }
 
-        public AndConstraint<LanguageExtEitherAssertions<TL, TR>> BeRight(string because = "", params object[] becauseArgs)
+        public AndWhichConstraint<LanguageExtEitherAssertions<TL, TR>, TR> BeRight(string because = "", params object[] becauseArgs)
         {
             Execute.Assertion
                 .BecauseOf(because, becauseArgs)
@@ -42,7 +42,7 @@ namespace FluentAssertions.LanguageExt
                 .ForCondition(subject => subject.IsRight)
                 .FailWith("but found to be Left.");
 
-            return new AndConstraint<LanguageExtEitherAssertions<TL, TR>>(this);
+            return new AndWhichConstraint<LanguageExtEitherAssertions<TL, TR>, TR>(this, Subject.RightAsEnumerable());
         }
 
         public AndConstraint<LanguageExtEitherAssertions<TL, TR>> BeRight(Action<TR> action, string because = "", params object[] becauseArgs)

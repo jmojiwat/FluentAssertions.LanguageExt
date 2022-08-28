@@ -14,7 +14,7 @@ namespace FluentAssertions.LanguageExt
 
         protected override string Identifier => "eitherasync";
 
-        public AndConstraint<LanguageExtEitherAsyncAssertions<TL, TR>> BeLeft(string because = "", params object[] becauseArgs)
+        public AndWhichConstraint<LanguageExtEitherAsyncAssertions<TL, TR>, TL> BeLeft(string because = "", params object[] becauseArgs)
         {
             Execute.Assertion
                 .BecauseOf(because, becauseArgs)
@@ -23,7 +23,7 @@ namespace FluentAssertions.LanguageExt
                 .ForCondition(subject => Run(() => subject.IsLeft))
                 .FailWith("but found to be Right.");
 
-            return new AndConstraint<LanguageExtEitherAsyncAssertions<TL, TR>>(this);
+            return new AndWhichConstraint<LanguageExtEitherAsyncAssertions<TL, TR>, TL>(this, Run(() => Subject.LeftAsEnumerable()));
         }
 
         public AndConstraint<LanguageExtEitherAsyncAssertions<TL, TR>> BeLeft(Action<TL> action, string because = "", params object[] becauseArgs)
@@ -34,7 +34,7 @@ namespace FluentAssertions.LanguageExt
             return new AndConstraint<LanguageExtEitherAsyncAssertions<TL, TR>>(this);
         }
 
-        public AndConstraint<LanguageExtEitherAsyncAssertions<TL, TR>> BeRight(string because = "", params object[] becauseArgs)
+        public AndWhichConstraint<LanguageExtEitherAsyncAssertions<TL, TR>, TR> BeRight(string because = "", params object[] becauseArgs)
         {
             Execute.Assertion
                 .BecauseOf(because, becauseArgs)
@@ -43,7 +43,7 @@ namespace FluentAssertions.LanguageExt
                 .ForCondition(subject => Run(() => subject.IsRight))
                 .FailWith("but found to be Left.");
 
-            return new AndConstraint<LanguageExtEitherAsyncAssertions<TL, TR>>(this);
+            return new AndWhichConstraint<LanguageExtEitherAsyncAssertions<TL, TR>, TR>(this, Run(() => Subject.RightAsEnumerable()));
         }
 
         public AndConstraint<LanguageExtEitherAsyncAssertions<TL, TR>> BeRight(Action<TR> action, string because = "", params object[] becauseArgs)

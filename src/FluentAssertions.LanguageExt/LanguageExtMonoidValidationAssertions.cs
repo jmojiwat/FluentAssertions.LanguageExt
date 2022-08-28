@@ -13,7 +13,7 @@ namespace FluentAssertions.LanguageExt
 
         protected override string Identifier => "monoidalvalidation";
 
-        public AndConstraint<LanguageExtMonoidValidationAssertions<TMonoidFail, TFail, TSuccess>> BeFail(string because = "", params object[] becauseArgs)
+        public AndWhichConstraint<LanguageExtMonoidValidationAssertions<TMonoidFail, TFail, TSuccess>, TFail> BeFail(string because = "", params object[] becauseArgs)
         {
             Execute.Assertion
                 .BecauseOf(because, becauseArgs)
@@ -22,10 +22,10 @@ namespace FluentAssertions.LanguageExt
                 .ForCondition(subject => subject.IsFail)
                 .FailWith("but found to be {0}.", Subject);
 
-            return new AndConstraint<LanguageExtMonoidValidationAssertions<TMonoidFail, TFail, TSuccess>>(this);
+            return new AndWhichConstraint<LanguageExtMonoidValidationAssertions<TMonoidFail, TFail, TSuccess>, TFail>(this, Subject.FailAsEnumerable());
         }
 
-        public AndConstraint<LanguageExtMonoidValidationAssertions<TMonoidFail, TFail, TSuccess>> BeSuccess(string because = "", params object[] becauseArgs)
+        public AndWhichConstraint<LanguageExtMonoidValidationAssertions<TMonoidFail, TFail, TSuccess>, TSuccess> BeSuccess(string because = "", params object[] becauseArgs)
         {
             Execute.Assertion
                 .BecauseOf(because, becauseArgs)
@@ -34,7 +34,7 @@ namespace FluentAssertions.LanguageExt
                 .ForCondition(subject => subject.IsSuccess)
                 .FailWith("but found to be {0}.", Subject);
 
-            return new AndConstraint<LanguageExtMonoidValidationAssertions<TMonoidFail, TFail, TSuccess>>(this);
+            return new AndWhichConstraint<LanguageExtMonoidValidationAssertions<TMonoidFail, TFail, TSuccess>, TSuccess>(this, Subject.SuccessAsEnumerable());
         }
     }
 }

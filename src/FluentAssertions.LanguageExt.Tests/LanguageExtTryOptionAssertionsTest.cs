@@ -52,6 +52,22 @@ public class LanguageExtTryOptionAssertionsTest
     }
 
     [Fact]
+    public void BeSome_with_expected_Some_using_which_returns_expected_result()
+    {
+        var action = () => SomeResult().Should().BeSome().Which.Should().Be(8);
+
+        action.Should().NotThrow();
+    }
+
+    [Fact]
+    public void BeSome_with_unexpected_Some_using_which_returns_expected_result()
+    {
+        var action = () => SomeResult().Should().BeSome().Which.Should().Be(4);
+
+        action.Should().Throw<XunitException>();
+    }
+
+    [Fact]
     public void BeNone_with_Some_returns_expected_result()
     {
         var action = () => SomeResult().Should().BeNone();
@@ -121,6 +137,22 @@ public class LanguageExtTryOptionAssertionsTest
         var action = () => FailResult().Should().BeFail();
 
         action.Should().NotThrow();
+    }
+
+    [Fact]
+    public void BeFail_with_expected_Fail_returns_expected_result()
+    {
+        var action = () => FailResult().Should().BeFail().Which.Should().BeOfType<Exception>();
+
+        action.Should().NotThrow();
+    }
+
+    [Fact]
+    public void BeFail_with_unexpected_Fail_returns_expected_result()
+    {
+        var action = () => FailResult().Should().BeFail().Which.Should().BeOfType<ArgumentException>();
+
+        action.Should().Throw<XunitException>();
     }
 
     [Fact]

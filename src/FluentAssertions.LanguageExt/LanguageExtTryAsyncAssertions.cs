@@ -2,6 +2,7 @@
 using FluentAssertions.Execution;
 using FluentAssertions.Primitives;
 using LanguageExt;
+using LanguageExt.Common;
 using static Nito.AsyncEx.AsyncContext;
 
 namespace FluentAssertions.LanguageExt
@@ -14,7 +15,7 @@ namespace FluentAssertions.LanguageExt
 
         protected override string Identifier => "tryasync";
 
-        public AndConstraint<LanguageExtTryAsyncAssertions<T>> BeFail(string because = "", params object[] becauseArgs)
+        public AndWhichConstraint<LanguageExtTryAsyncAssertions<T>, Error> BeFail(string because = "", params object[] becauseArgs)
         {
             Execute.Assertion
                 .BecauseOf(because, becauseArgs)
@@ -23,10 +24,10 @@ namespace FluentAssertions.LanguageExt
                 .ForCondition(subject => Run(subject.IsFail))
                 .FailWith("but found to be not.");
 
-            return new AndConstraint<LanguageExtTryAsyncAssertions<T>>(this);
+            return new AndWhichConstraint<LanguageExtTryAsyncAssertions<T>, Error>(this, Run(() => Subject.ToEither().LeftAsEnumerable()));
         }
 
-        public AndConstraint<LanguageExtTryAsyncAssertions<T>> BeSuccess(string because = "", params object[] becauseArgs)
+        public AndWhichConstraint<LanguageExtTryAsyncAssertions<T>, T> BeSuccess(string because = "", params object[] becauseArgs)
         {
             Execute.Assertion
                 .BecauseOf(because, becauseArgs)
@@ -35,7 +36,7 @@ namespace FluentAssertions.LanguageExt
                 .ForCondition(subject => Run(subject.IsSucc))
                 .FailWith("but found to be not.");
 
-            return new AndConstraint<LanguageExtTryAsyncAssertions<T>>(this);
+            return new AndWhichConstraint<LanguageExtTryAsyncAssertions<T>, T>(this, Run(() => Subject.AsEnumerable()));
         }
 
         public AndConstraint<LanguageExtTryAsyncAssertions<T>> BeSuccess(Action<T> action, string because = "", params object[] becauseArgs)
