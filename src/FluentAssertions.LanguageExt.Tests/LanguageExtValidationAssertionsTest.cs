@@ -28,7 +28,7 @@ public class LanguageExtValidationAssertionsTest
     [Fact]
     public void BeFail_with_Fail_using_which_returns_expected_result()
     {
-        var action = () => FailResult().Should().BeFail().Which.Should().Be(123);
+        var action = () => FailResult().Should().BeFail().Which.Should().BeEquivalentTo(new[] { 123 });
 
         action.Should().NotThrow();
     }
@@ -36,7 +36,7 @@ public class LanguageExtValidationAssertionsTest
     [Fact]
     public void BeFail_with_unexpected_Fail_using_which_returns_expected_result()
     {
-        var action = () => FailResult().Should().BeFail().Which.Should().Be(456);
+        var action = () => FailResult().Should().BeFail().Which.Should().BeEquivalentTo(new[] { 456 });
 
         action.Should().Throw<XunitException>();
     }
