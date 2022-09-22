@@ -68,6 +68,18 @@ right.Should().Be("a");
 
 ### Validation
 
+#### Breaking Change for 0.3.1
+
+There's a breaking change when using `BeFail()` with the .Which extension.
+
+When using the `BeFail()` assertion on a `Validation<TFail, TSucc>`, the `.Which` extension returns only a single failure instance even though the `Validation` type has a `Seq<TFail>`. This prevents proper assertions on the failures returned from a `Validation` using the `.Which` extension.
+
+This has now been fixed.
+
+The return signature for `BeFail()` has changed from `AndWhichConstraint<LanguageExtValidationAssertions<TFail, TSuccess>, TFail>` to `AndWhichConstraint<LanguageExtValidationAssertions<TFail, TSuccess>, Seq<TFail>>`
+
+Special thanks to @sparerd.
+
 #### Methods
 
 - `BeFail()`
