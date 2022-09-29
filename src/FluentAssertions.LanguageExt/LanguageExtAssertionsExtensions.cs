@@ -38,5 +38,7 @@ namespace FluentAssertions.LanguageExt
         public static LanguageExtTryOptionAsyncAssertions<T> Should<T>(this TryOptionAsync<T> instance) => new(instance);
 
         public static LanguageExtTryOptionAssertions<T> Should<T>(this TryOption<T> instance) => new(instance);
+
+        public static LanguageExtFinAssertions<T> Should<T>(this Fin<T> instance) => new(instance);
     }
 }

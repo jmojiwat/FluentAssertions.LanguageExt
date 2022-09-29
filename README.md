@@ -104,3 +104,30 @@ Special thanks to @sparerd.
 - `BeNone()`
 - `BeNoneOrFail()`
 - `Be(expected)`
+
+### Fin
+
+#### Methods
+- `BeSuccess()`
+- `BeSuccess(action)`
+- `BeFail()`
+- `BeBottom()`
+- `Be(expected)`
+
+#### Example Usage
+```c#
+using FluentAssertions;
+using FluentAssertions.LanguageExt;
+
+... 
+Fin<int> successFin = Prelude.FinSucc(8);
+Fin<int> failedFin = Prelude.FinFail<int>("Error message");
+
+successFin.Should().BeSuccess();
+successFin.Should().BeSuccess(v => v.Should().Be(8));
+successFin.Should().BeSuccess().Which.Should().Be(8);
+successFin.Should().Be(8);
+
+failedFin.Should().BeFail();
+failedFin.Should().BeFail().Which.Message.Should().Be("Error message");
+```
