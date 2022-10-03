@@ -3,6 +3,8 @@
 * See [LanguageExt](https://github.com/louthy/language-ext/) C# Functional Programming Language Extensions for more information about functional-programming 'base class library'.
 * See [FluentAssertions](https://fluentassertions.com/) for more information about the extensive set of extension methods for unit tests.
 
+Special thanks to [@sparerd](https://github.com/sparerd) for the many new features.
+
 ## Nuget
 
 ```Install-Package FluentAssertions.LanguageExt```
@@ -77,8 +79,6 @@ When using the `BeFail()` assertion on a `Validation<TFail, TSucc>`, the `.Which
 This has now been fixed.
 
 The return signature for `BeFail()` has changed from `AndWhichConstraint<LanguageExtValidationAssertions<TFail, TSuccess>, TFail>` to `AndWhichConstraint<LanguageExtValidationAssertions<TFail, TSuccess>, Seq<TFail>>`
-
-Special thanks to @sparerd.
 
 #### Methods
 
