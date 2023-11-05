@@ -1,18 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net5.0;net6.0</TargetFrameworks>
+    <TargetFrameworks>net6.0;netstandard2.0</TargetFrameworks>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>disable</Nullable>
-    <Version>0.3.1</Version>
+    <Version>0.5</Version>
     <Authors>Jacob Mojiwat</Authors>
     <PackageProjectUrl>https://github.com/jmojiwat/FluentAssertions.LanguageExt</PackageProjectUrl>
-    <Copyright>Copyright © 2022. Jacob Mojiwat and contributors</Copyright>
+    <Copyright>Copyright © 2023. Jacob Mojiwat and contributors</Copyright>
     <RepositoryUrl>https://github.com/jmojiwat/FluentAssertions.LanguageExt</RepositoryUrl>
     <PackageTags>FluentAssertions;LanguageExt</PackageTags>
-    <PackageReleaseNotes>Breaking Change when using validation and .Which extension.</PackageReleaseNotes>
+    <PackageReleaseNotes>Added support for asserting on Fin&lt;T&gt; monad.</PackageReleaseNotes>
     <Description>LanguageExt extensions for FluentAssertions.</Description>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageReadmeFile>README.md</PackageReadmeFile>
       <IncludeSymbols>true</IncludeSymbols>
 	<EmbedUntrackedSources>true</EmbedUntrackedSources>
@@ -29,8 +28,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentAssertions" Version="6.2.0" />
-    <PackageReference Include="LanguageExt.Core" Version="4.0.3" />
+    <PackageReference Include="FluentAssertions" Version="6.10.0" />
+    <PackageReference Include="LanguageExt.Core" Version="4.4.2" />
     <PackageReference Include="Nito.AsyncEx.Context" Version="5.1.2" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
   </ItemGroup>
