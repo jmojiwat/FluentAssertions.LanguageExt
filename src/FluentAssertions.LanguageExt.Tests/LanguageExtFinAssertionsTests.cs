@@ -1,4 +1,5 @@
 ﻿using LanguageExt;
+using LanguageExt.Common;
 using Xunit;
 using Xunit.Sdk;
 using static LanguageExt.Prelude;
@@ -91,8 +92,6 @@ namespace FluentAssertions.LanguageExt.Tests
             action.Should().Throw<XunitException>();
         }
 
-
-
         [Fact]
         public void BeFail_with_Success_returns_expected_result()
         {
@@ -147,6 +146,13 @@ namespace FluentAssertions.LanguageExt.Tests
             var action = () => FailureFin.Should().BeBottom();
 
             action.Should().Throw<XunitException>();
+        }
+
+        [Fact]
+        public void BeFail_Should_Not_Throw_Missing_Method_Exception()
+        {
+            var action = () => FinFail<int>(Error.New("")).Should().BeFail();
+            action.Should().NotThrow();
         }
     }
 }
