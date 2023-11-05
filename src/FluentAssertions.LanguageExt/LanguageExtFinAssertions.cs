@@ -48,8 +48,11 @@ namespace FluentAssertions.LanguageExt
                 .Given(() => Subject)
                 .ForCondition(subject => subject.IsFail)
                 .FailWith("but found to be not.")
+#if NETSTANDARD2_0
+                .Apply(_ => ContinueWhich(this, Subject.Match(x => default, error => error)));
+#elif NET5_0_OR_GREATER
                 .Apply(_ => ContinueWhich(this, Subject.Match(_ => default, error => error)));
-
+#endif
         public AndConstraint<LanguageExtFinAssertions<T>> BeBottom(string because = "", params object[] becauseArgs) =>
             Execute.Assertion
                 .BecauseOf(because, becauseArgs)
